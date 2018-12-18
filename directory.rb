@@ -16,10 +16,11 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  students.each_with_index do |student, index|
-    if student[:name].chars.length < 12
-      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  count_var = 0
+  while count_var < students.length
+    index = count_var
+    puts "#{index}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
+    count_var += 1
   end
 end
 def print_footer(names)
