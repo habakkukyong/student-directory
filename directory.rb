@@ -4,7 +4,7 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, hobbies: [:source_closing, :patent_trolling, :predatory_litigation], country: :seastead, height: :excellent }
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -19,7 +19,7 @@ def print(students)
   count_var = 0
   while count_var < students.length
     index = count_var
-    puts "#{index}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
+    puts "#{index}. #{students[index][:name]} (#{students[index][:cohort]} cohort; hobbies: #{students[index][:hobbies].map{ |e| e.to_s}.join(", ")}; country: #{students[index][:country]}; height: #{students[index][:height]})"
     count_var += 1
   end
 end
