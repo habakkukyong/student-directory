@@ -12,19 +12,19 @@ def input_students
 end
 students = input_students
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(80)
+  puts "-------------".center(80)
 end
 def print(students)
   count_var = 0
   while count_var < students.length
     index = count_var
-    puts "#{index}. #{students[index][:name]} (#{students[index][:cohort]} cohort; hobbies: #{students[index][:hobbies].map{ |e| e.to_s}.join(", ")}; country: #{students[index][:country]}; height: #{students[index][:height]})"
+    puts "#{index}. #{students[index][:name]} (#{students[index][:cohort]} cohort; hobbies: #{students[index][:hobbies].map{ |e| e.to_s}.join(", ")}; country: #{students[index][:country]}; height: #{students[index][:height]})".center(80)
     count_var += 1
   end
 end
 def print_footer(names)
-  puts "Overall we have #{names.count} great students"
+  puts "Overall we have #{names.count} great students".center(80)
 end
 print_header
 print(students)
