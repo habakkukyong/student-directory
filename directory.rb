@@ -22,12 +22,12 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   students = []
-  name = gets.chomp
+  name = gets.delete("\n")
   students_num = 1
   while !name.empty? do
     student = Student.new(name, students_num)
     puts "Cohort?"
-    cohort = gets.chomp
+    cohort = gets.delete("\n")
     student.cohort = cohort if !cohort.empty?
     students << student
     if students.length == 1
@@ -35,7 +35,7 @@ def input_students
     else
       puts "Now we have #{students_num} students"
     end
-    name = gets.chomp
+    name = gets.delete("\n")
     students_num += 1
   end
   students
@@ -56,7 +56,7 @@ end
 
 students = input_students
 puts "Choose a cohort to print"
-cohort = gets.chomp
+cohort = gets.delete("\n")
 students_in_cohort = []
 students.each { |student| students_in_cohort << student if student.cohort == cohort }
 print_header
