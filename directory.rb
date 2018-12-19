@@ -30,7 +30,11 @@ def input_students
     cohort = gets.chomp
     student.cohort = cohort if !cohort.empty?
     students << student
-    puts "Now we have #{students_num} students"
+    if students.length == 1
+      puts "Now we have #{students_num} student";
+    else
+      puts "Now we have #{students_num} students"
+    end
     name = gets.chomp
     students_num += 1
   end
