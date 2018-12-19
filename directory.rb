@@ -7,9 +7,7 @@ class Student
     @hobbies = hobbies.length > 1 ? hobbies[0..-2].join(", ") + " and " + hobbies.last : hobbies.first
     @country = country
   end
-  def set_cohort(cohort)
-    @cohort = cohort
-  end
+  attr_accessor :cohort
   def print_deets
     puts "#{@id}. Name:    #{@name}\n   Cohort:  #{@cohort}\n   Hobbies: #{@hobbies}\n   Country: #{@country}"
   end
@@ -30,7 +28,7 @@ def input_students
     student = Student.new(name, students_num)
     puts "Cohort?"
     cohort = gets.chomp
-    student.set_cohort(cohort) if !cohort.empty?
+    student.cohort = cohort if !cohort.empty?
     students << student
     puts "Now we have #{students_num} students"
     name = gets.chomp
@@ -39,7 +37,7 @@ def input_students
   students
 end
 
-def print(students)
+def print_details(students)
   count_var = 0
   while count_var < students.length
     index = count_var
@@ -48,14 +46,18 @@ def print(students)
   end
 end
 
-def print_footer(names)
-  puts "Overall we have #{names.count} great students".center(80)
+def print_footer(names, cohort)
+  puts "Overall we have #{names.count} great students in the #{cohort} cohort".center(80)
 end
 
-students =input_students
+students = input_students
+puts "Choose a cohort to print"
+cohort = gets.chomp
+students_in_cohort = []
+students.each { |student| students_in_cohort << student if student.cohort == cohort }
 print_header
-print(students)
-print_footer(students)
+print_details(students_in_cohort)
+print_footer(students_in_cohort, cohort)
 #=end
 
 =begin
