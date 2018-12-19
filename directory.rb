@@ -1,88 +1,65 @@
-#=begin
-class Student
-  def initialize(name, id, cohort="November", hobbies=["Source-closing", "patent-trolling", "predatory litigation"], country="Nearest Seastead")
-    @name = name
-    @id = id
-    @cohort = cohort
-    @hobbies = hobbies.length > 1 ? hobbies[0..-2].join(", ") + " and " + hobbies.last : hobbies.first
-    @country = country
-  end
-  attr_accessor :cohort
-  def print_deets
-    puts "#{@id}. Name:    #{@name}\n   Cohort:  #{@cohort}\n   Hobbies: #{@hobbies}\n   Country: #{@country}"
-  end
-end
-
-def print_header
-  puts "The students of Villains Academy".center(80)
-  puts "-------------".center(80)
-end
+@students = [] # an empty array accessible to all methods
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  students = []
+  # get the first name
   name = gets.chomp
-  students_num = 1
+  # while the name is not empty, repeat this code
   while !name.empty? do
-    student = Student.new(name, students_num)
-    puts "Cohort? Defaults to November if you just press return"
-    cohort = gets.chomp
-    student.cohort = cohort if !cohort.empty?
-    students << student
-    if students.length == 1
-      puts "Now we have #{students_num} student";
-    else
-      puts "Now we have #{students_num} students"
-    end
+    # add the student hash to the array
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students"
+    # get another name from the user
     name = gets.chomp
-    students_num += 1
   end
-  students
-end
-
-def print_details(students)
-  if students
-    count_var = 0
-    while count_var < students.length
-      students[count_var].print_deets
-      count_var += 1
-    end
-  end
-end
-
-def print_footer(names, cohort)
-  puts "Overall we have #{names ? names.count : 0} great students in the #{cohort} cohort".center(80)
 end
 
 def interactive_menu
   loop do
-    # print menu and ask for input
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    # read input and save to var
-    selection = gets.chomp
-    # do what user requested be done
-    case selection
-      when "1"
-        # input students
-        $students = input_students
-      when "2"
-        # show the students
-        puts "Choose a cohort to print"
-        cohort = gets.chomp
-        students_in_cohort = []
-        $students.each { |student| students_in_cohort << student if student.cohort == cohort } if $students
-        print_header
-        print_details(students_in_cohort)
-        print_footer(students_in_cohort, cohort)
-      when "9"
-        exit # this will cause the program to terminate
-      else
-        puts "I don't know what you meant, try again"
-    end
+    print_menu
+    process(gets.chomp)
   end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit" # 9 because we'll be adding more items
+end
+
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit # this will cause the program to terminate
+  else
+    puts "I don't know what you meant, try again"
+  end
+end
+
+def print_header
+  puts "The students of Villains Academy"
+  puts "-------------"
+end
+
+def print_student_list
+  @students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
 interactive_menu
