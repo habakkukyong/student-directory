@@ -18,7 +18,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process($stdin.gets.chomp)
   end
 end
 
@@ -38,16 +38,16 @@ end
 
 def process(selection)
   case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_students
-  when "4"
-    load_students
-  when "9"
-    exit # this will cause the program to terminate
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "4"
+      load_students
+    when "9"
+      exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
   end
@@ -80,8 +80,8 @@ def save_students
   file.close()
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each { |line|
     name, cohort = line.chomp.split(",")
     @students << { name: name, cohort: cohort.to_sym }
@@ -89,4 +89,17 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} students from #{filename}."
+  else
+    puts "Sorry, #{filename} does not exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
